@@ -1,0 +1,76 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" novalidate>
+    <h2 md-dialog-title>Add new item</h2>
+    <hr/>
+
+    <md-dialog-content>
+        <md-input-container class="g-full-width">
+            <input mdInput placeholder="Item Description" formControlName="itemDescription">
+            <md-error *ngIf="formGroup.get('itemDescription').hasError('required')">
+                Item description is <strong>required</strong>
+            </md-error>
+        </md-input-container>
+        <div class="row">
+            <div class="col-md-6" style="margin-top: 22px;">
+                <md-select placeholder="Item Type" formControlName="itemType" class="g-full-width">
+                    <md-option *ngFor="let i of itemTypes" [value]="i.value">
+                        {{ i.text }}
+                    </md-option>
+                    <md-error *ngIf="formGroup.get('itemType').hasError('required')">
+                        Item type is <strong>required</strong>
+                    </md-error>
+                </md-select>          
+            </div>
+            <div class="col-md-6">
+                <md-input-container>
+                    <input mdInput placeholder="HSN/SAC Code" formControlName="hsnCode">
+                </md-input-container>
+            </div>            
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <md-input-container>
+                    <input mdInput placeholder="Item/SKU Code" formControlName="itemCode">
+                </md-input-container>
+            </div>
+            <div class="col-md-6">
+                <md-input-container>
+                    <input mdInput type="number" placeholder="Selling Price" formControlName="sellingPrice">
+                </md-input-container>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <md-input-container>
+                    <input mdInput type="number" placeholder="Purchase Price" formControlName="purchasePrice">
+                </md-input-container>
+            </div>
+            <div class="col-md-6" style="margin-top: 22px;">
+                <md-select placeholder="Unit" formControlName="unitOfMeasurement" class="g-full-width">
+                    <md-option *ngFor="let u of units" [value]="u.value">
+                        {{ u.text }}
+                    </md-option>
+                </md-select>                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <md-input-container>
+                    <input mdInput type="number" placeholder="Discount(%)" formControlName="discount">
+                </md-input-container>
+            </div>
+        </div>
+
+        <md-input-container class="g-full-width">
+            <textarea mdInput placeholder="Item Notes" formControlName="itemNotes"></textarea>
+        </md-input-container>
+
+    </md-dialog-content>
+
+    <hr/>
+
+    <md-dialog-actions class="g-margin-10">
+        <div class="g-spacer"></div>
+        <button md-raised-button type="button" (click)="onClose()">Cancel</button> &nbsp;
+        <button md-raised-button type="submit">Save</button>
+    </md-dialog-actions>
+</form>

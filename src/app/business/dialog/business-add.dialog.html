@@ -1,0 +1,52 @@
+<form [formGroup]="businessForm" (ngSubmit)="onSubmitBusiness()" novalidate>
+    <h2 md-dialog-title><span>{{ frmTitle }}</span> Business</h2>
+    <hr/>
+
+    <md-dialog-content>
+
+        <md-input-container class="g-full-width" disabled>
+            <input mdInput placeholder="Business Name" formControlName="businessName">
+            <md-error *ngIf="businessForm.get('businessName').hasError('required')">
+                BusinessName is <strong>required</strong>
+            </md-error>
+        </md-input-container>
+        <md-input-container class="g-full-width" disabled>
+            <input mdInput placeholder="Pan No." formControlName="pan">
+            <md-error *ngIf="businessForm.get('pan').hasError('required')">
+                PAN is <strong>required</strong>
+            </md-error>
+            <md-error *ngIf="businessForm.get('pan').hasError('pattern')">
+                PAN is <strong>invalid</strong>
+            </md-error>
+        </md-input-container>
+
+        <div formArrayName="gstins">
+            <div *ngFor="let gtnin of businessForm.controls.gstins.controls; let i=index" [formGroupName]="i">
+                    <md-input-container>
+                        <input mdInput placeholder="GSTIN" formControlName="gstin" (blur)="onBlurGetStateName(i)">
+                        <!--<md-error *ngIf="businessForm.gstins.controls.get('gstin').hasError('required')">
+                            PAN is <strong>required</strong>
+                        </md-error>-->
+                    </md-input-container>
+                    <md-input-container>
+                        <input mdInput placeholder="State Name" formControlName="displayName">
+                    </md-input-container>
+                    <a *ngIf="businessForm.controls.gstins.controls.length > 1" (click)="removeGstin(i)" style="cursor: pointer"><i class="material-icons">indeterminate_check_box</i></a>
+            </div>
+        </div>
+
+        <div class="margin-20">
+            <a (click)="addGstin()" style="cursor: pointer">
+            + Add another GSTIN
+          </a>
+        </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions class="g-margin-10">
+        <div class="g-spacer"></div>
+        <button md-raised-button type="button" (click)="onClose(true)">Cancel</button>
+        <!-- Can optionally provide a result for the closing dialog. -->
+        <button md-raised-button type="submit">Save</button>
+    </md-dialog-actions>
+</form>

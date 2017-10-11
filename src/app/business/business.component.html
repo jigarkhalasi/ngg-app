@@ -1,0 +1,109 @@
+<div id="gst-home">
+
+    <div class="g-breadcrumb">
+        <ul>
+            <li>
+                GST
+            </li>
+            <li>
+                >
+            </li>
+            <li>
+                <a>Business</a>
+            </li>
+        </ul>
+    </div>
+    <div class="g-page-header">
+        <h1>
+            All Businesses
+        </h1>
+        <div class="float-md-right">
+            <button md-raised-button (click)="openAddBusiness(null)">Add Business</button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <md-card class="g-margin-10 g-business" *ngFor="let b of businesses">
+        <div class="row">
+            <div class="col-md-6">{{ b.businessName }}</div>
+
+            <span class="g-spacer"></span>
+            <button md-icon-button [mdMenuTriggerFor]="menu">
+                    <i class="material-icons" >more_vert</i>
+            </button>
+            <md-menu #menu="mdMenu">
+                <button md-menu-item (click)="openAddBusiness(b)">
+                    <!--<i class="material-icons" >mode_edit</i>-->                    
+                    <span>Edit</span>
+                </button>
+                <button md-menu-item (click)="removeBusiness(b)">
+                    <!--<i class="material-icons">remove_circle</i>-->
+                    <span>Remove</span>
+                </button>
+            </md-menu>
+            <!--<div class="col-md-6"><button md-raised-button (click)="openAddBusiness(b)"><i class="material-icons" >mode_edit</i></button><button
+                    md-raised-button (click)="removeBusiness(b)"><i class="material-icons">remove_circle</i></button></div>-->
+        </div>
+
+        <md-list class="list">
+            <md-list-item *ngFor="let g of b.gstins" class="list-item">
+                {{ g.displayName }} (GSTIN: {{ g.gstin }})
+                <span class="g-spacer"></span>
+            <button md-icon-button [mdMenuTriggerFor]="menu">
+                    <i class="material-icons" >more_vert</i>
+            </button>
+            <md-menu #menu="mdMenu">
+                <button md-menu-item (click)="openAddGstIn(b,g)">
+                    <!--<i class="material-icons" >mode_edit</i>-->
+                    <span>Edit</span>
+                </button>
+                <button md-menu-item (click)="removeGstin(b,g)">
+                    <!--<i class="material-icons">remove_circle</i>-->
+                    <span>Remove</span>
+                </button>
+            </md-menu>
+                <!--<button md-raised-button (click)="openAddGstIn(b,g)"><i class="material-icons" >mode_edit</i></button><button
+                    md-raised-button (click)="removeGstin(b,g)"><i class="material-icons">remove_circle</i></button>-->
+            </md-list-item>
+        </md-list>
+
+        <div style="margin: 10px">
+            <button md-button (click)="openAddGstIn(b,null)">+ Add new Branch/ GSTIN/ State</button>
+            <!--<button md-button class="g-pull-right" >GSTIN Collection Summary</button>-->
+        </div>
+    </md-card>
+</div>
+<div class="example-container mat-elevation-z8">
+    <md-table #table [dataSource]="dataSource">
+
+        <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- ID Column -->
+        <ng-container cdkColumnDef="userId">
+            <md-header-cell *cdkHeaderCellDef> ID </md-header-cell>
+            <md-cell *cdkCellDef="let row"> {{row.id}} </md-cell>
+        </ng-container>
+
+        <!-- Progress Column -->
+        <ng-container cdkColumnDef="progress">
+            <md-header-cell *cdkHeaderCellDef> Progress </md-header-cell>
+            <md-cell *cdkCellDef="let row"> {{row.progress}}% </md-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container cdkColumnDef="userName">
+            <md-header-cell *cdkHeaderCellDef> Name </md-header-cell>
+            <md-cell *cdkCellDef="let row"> {{row.name}} </md-cell>
+        </ng-container>
+
+        <!-- Color Column -->
+        <ng-container cdkColumnDef="color">
+            <md-header-cell *cdkHeaderCellDef>Color</md-header-cell>
+            <md-cell *cdkCellDef="let row" [style.color]="row.color"> {{row.color}} </md-cell>
+        </ng-container>
+
+        <md-header-row *cdkHeaderRowDef="displayedColumns"></md-header-row>
+        <md-row *cdkRowDef="let row; columns: displayedColumns;"></md-row>
+    </md-table>
+</div>

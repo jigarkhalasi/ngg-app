@@ -1,0 +1,58 @@
+.login-container {
+    margin-right: auto!important;
+    margin-left: auto!important;
+    width: 450px;
+    //margin-top: 130px;
+    box-shadow: 0 3px 6px rgba(0,0,0,.23), 0 3px 6px rgba(0,0,0,.16);
+    border-radius: 5px;
+    border: thin solid rgba(96,125,139,.23);
+    background-color: #fff;
+    padding: 20px;
+}
+
+.g-login-page-title {
+    font-size: 40px;
+    color: white;
+    font-weight: 600;
+    /* text-transform: lowercase; */
+    padding: 20px;
+    text-align: center;
+}
+
+.g-login-title {
+    font-size: 21px;
+    color: black;
+    padding: 5px 0px;
+    margin-bottom: 10px;
+}
+
+.form-control {
+    border: 1px solid white;
+    border-bottom: 1px solid rgba(0,0,0,.15);
+    border-radius: 0!important;    
+}
+.form-control:focus {
+    border-bottom-color: #5cb3fd;
+}
+
+
+/* Extra small devices (portrait phones, less than 544px)*/
+@media (max-width: 543px) { 
+    .login-container {
+        margin-right: auto!important;
+        margin-left: auto!important;
+        width: 100%;
+        margin-top: 20px;
+    }
+ }
+
+/* Small devices (landscape phones, 544px and up)*/
+@media (min-width: 544px) and (max-width: 767px) { 
+    .login-container {
+        margin-right: auto!important;
+        margin-left: auto!important;
+        width: 100%;
+        margin-top: 20px;
+    }
+ }
+

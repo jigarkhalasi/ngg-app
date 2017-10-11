@@ -1,0 +1,309 @@
+<div id="gst-sales">
+
+  <div class="g-breadcrumb">
+    <ul>
+      <li>
+        GST
+      </li>
+      <li>
+        >
+      </li>
+      <li>
+        <a routerLink="/businesses">Business</a>
+      </li>
+      <li>
+        >
+      </li>
+      <li>
+        <a [routerLink]="['/sales']">Sales</a>
+      </li>
+    </ul>
+  </div>
+
+  <form (ngSubmit)="onSubmit()" [formGroup]="formGroup" novalidate>
+    <div class="g-page-header">
+      <h1 class="pull-left">
+        Create Sales Invoice
+      </h1>
+      <div class="float-md-right">
+        <button md-raised-button type="button" (click)="navigateToList()">Back to list</button>
+        <button md-raised-button type="submit"> Save Invoice</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="row g-margin-10">
+      <div class="col-lg-6">
+        <div class="row">
+          <div class="col-lg-5">
+
+            <md-input-container class="g-full-width" disabled>
+              <input mdInput placeholder="Invoice Sequence No." formControlName="invoiceSequenceNo">
+              <!--<md-error *ngIf="formGroup.get('invoiceSequenceNo').hasError('required')">
+                Invoice sequence no. is <strong>required</strong>
+              </md-error>-->
+            </md-input-container>
+
+          </div>
+          <div class="col-lg-5">
+
+            <md-input-container class="g-full-width">
+              <input mdInput [mdDatepicker]="picker" placeholder="Invoice Date (dd/mm/yyyy)" formControlName="invoiceDate" autofocus>
+              <button mdSuffix [mdDatepickerToggle]="picker"></button>
+              <md-error *ngIf="formGroup.get('invoiceDate').hasError('required')">
+                Invoice date is <strong>required</strong>
+              </md-error>
+            </md-input-container>
+            <md-datepicker #picker></md-datepicker>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="row justify-content-end">
+          <div class="col-lg-5">
+
+            <md-input-container class="g-full-width">
+              <input mdInput placeholder="Reference" formControlName="reference">
+            </md-input-container>
+
+          </div>
+          <div class="col-lg-5">
+            <md-input-container class="g-full-width">
+              <input mdInput [mdDatepicker]="picker1" placeholder="Due Date (dd/mm/yyyy)" formControlName="dueDate">
+              <button mdSuffix [mdDatepickerToggle]="picker1"></button>
+            </md-input-container>
+            <md-datepicker #picker1></md-datepicker>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-headroom-less">
+      <div class="col-lg-6">
+        <div class="row">
+          <div class="col-lg-10">
+
+            <md-input-container class="g-full-width">
+              <input mdInput placeholder="Contact" [mdAutocomplete]="auto" formControlName="contact">
+              <md-error *ngIf="formGroup.get('contact').hasError('required')">
+                Contact is <strong>required</strong>
+              </md-error>
+            </md-input-container>
+            <md-autocomplete #auto="mdAutocomplete" [displayWith]="displayContactName">
+              <md-option *ngFor="let contact of filteredContacts | async" [value]="contact" (onSelectionChange)="onSelectContact(contact)">
+                {{ contact.name }}
+              </md-option>
+              <md-option (onSelectionChange)="openContactDialog()">
+                <button type="button" md-raised-button class="g-full-width"> Add New Contact </button>
+              </md-option>
+            </md-autocomplete>            
+            <!-- <button type="button" md-raised-button (click)="openItemDialog()"> Add Item </button> -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-5">
+
+            <md-input-container class="g-full-width">
+              <input mdInput placeholder="GSTIN" formControlName="contactGstin">
+              <md-error *ngIf="formGroup.get('contactGstin').hasError('required')">
+                GSTIN is <strong>required</strong>
+              </md-error>
+            </md-input-container>
+
+          </div>
+          <div class="col-lg-5" style="margin-top: 22px;">
+
+            <md-select placeholder="Place of Supply" class="g-full-width" formControlName="placeOfSupply">
+              <md-option *ngFor="let state of states" [value]="state.stateCode">
+                {{state.stateName}}
+              </md-option>
+            </md-select>
+
+          </div>
+
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="row justify-content-end">
+          <div class="col-lg-5">
+            <div class="form-group">
+              <label for="contactId" class="form-control-label col-form-label-sm">Billing Address</label>
+              <button type="button" class="btn btn-link btn-sm" (click)="openAddressDialog('billing')">Edit</button>
+              <p class="g-address">
+                {{ invoice.billingAddress.address }} {{ invoice.billingAddress.city }} - {{ invoice.billingAddress.pinCode }} {{ invoice.billingAddress.state
+                }}
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="form-group">
+              <label for="contactId" class="form-control-label col-form-label-sm">Shipping Address</label>
+              <button type="button" class="btn btn-link btn-sm" (click)="openAddressDialog('shipping')" *ngIf="!formGroup.get('sameAsBillingAddress').value">Edit</button>
+              <p class="g-address">
+                {{ invoice.shippingAddress.address }} {{ invoice.shippingAddress.city }} - {{ invoice.shippingAddress.pinCode }} {{ invoice.shippingAddress.state
+                }}
+              </p>
+
+              <md-checkbox formControlName="sameAsBillingAddress" (change)="onChangeSameAsBillingAddress()">Same as billing address</md-checkbox>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+  <div class="">
+    <div class="row g-margin-10">
+      <div class="col-md-12">
+        <div class="g-table-editable g-scrollbar g-table-1">
+          <table class="g-table">
+            <thead>
+              <tr>
+                <th colspan="1" rowspan="2" class="text-center">#</th>
+                <th colspan="1" rowspan="2" class="text-left">Item Description</th>
+                <th colspan="1" rowspan="2" class="text-left">Item Type</th>
+                <th colspan="1" rowspan="2" class="text-center">HSN / SAC</th>
+                <th colspan="1" rowspan="2" class="text-right">Qty</th>
+                <th colspan="1" rowspan="2" class="text-right">Rate/Item (Rs.)</th>
+                <th colspan="1" rowspan="2" class="text-right">Discount (Rs.)</th>
+                <th colspan="1" rowspan="2" class="text-right">Taxable Value</th>
+                <th colspan="2" rowspan="1" class="text-center">CGST</th>
+                <th colspan="2" rowspan="1" class="text-center">SGST</th>
+                <th colspan="2" rowspan="1" class="text-center">IGST</th>
+                <th colspan="2" rowspan="1" class="text-center">CESS</th>
+              </tr>
+              <tr>
+                <th colspan="1" rowspan="1" class="text-center">%</th>
+                <th colspan="1" rowspan="1" class="text-right">Amt (Rs.)</th>
+                <th colspan="1" rowspan="1" class="text-center">%</th>
+                <th colspan="1" rowspan="1" class="text-right">Amt (Rs.)</th>
+                <th colspan="1" rowspan="1" class="text-center">%</th>
+                <th colspan="1" rowspan="1" class="text-right">Amt (Rs.)</th>
+                <th colspan="1" rowspan="1" class="text-center">%</th>
+                <th colspan="1" rowspan="1" class="text-right">Amt (Rs.)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let model of invoice.invoiceDetails; let last = last">
+                <td class="text-center"> {{ model.itemOrdinal }} </td>
+                <td>
+                  <input type="text" class="form-control" name="itemDescription" [(ngModel)]="model.itemDescription" (blur)="onBlurInput(model)"
+                  />
+                </td>
+                <td>
+                  <select [(ngModel)]="model.itemType" class="form-control" (blur)="onBlurInput(model)">
+                    <option *ngFor="let it of itemTypes" [value]="it.value">{{ it.text }}</option>
+                  </select>
+                </td>
+                <td>
+                  <input type="text" class="form-control text-center" name="hsnCode" [(ngModel)]="model.hsnCode" (blur)="onBlurInput(model)"
+                  />
+                </td>
+                <td>
+                  <input type="number" class="form-control text-right" name="qty" [(ngModel)]="model.qty" (input)="onChangeRecord(model)" (blur)="onBlurInput(model)"
+                  />
+                </td>
+                <td>
+                  <input type="number" class="form-control text-right" name="ratePerItem" [(ngModel)]="model.ratePerItem" (input)="onChangeRecord(model)"
+                    (blur)="onBlurInput(model)" />
+                </td>
+                <td>
+                  <input type="number" class="form-control text-right" name="discount" [(ngModel)]="model.discount" (input)="onChangeRecord(model)"
+                    (blur)="onBlurInput(model)" />
+                </td>
+                <td>
+                  <input type="number" class="form-control text-right" name="taxableValue" [(ngModel)]="model.taxableValue" (input)="onChangeTaxableValue(model)"
+                    (blur)="onBlurInput(model)" />
+                </td>
+                <td>
+                  <select [(ngModel)]="model.cgstPer" class="form-control" [disabled]="isCgstDisabled" (blur)="onBlurInput(model)" (change)="onChangeTax(model)">
+                    <option *ngFor="let g of gstSlabs" [value]="g.value">{{ g.text }}</option>
+                  </select>
+                </td>
+                <td class="g-td-padding text-right"> {{ model.cgstAmount }} </td>
+                <td>
+                  <select [(ngModel)]="model.sgstPer" class="form-control" [disabled]="isSgstDisabled" (blur)="onBlurInput(model)" (change)="onChangeTax(model)">
+                    <option *ngFor="let g of gstSlabs" [value]="g.value">{{ g.text }}</option>
+                  </select>
+                </td>
+                <td class="g-td-padding text-right"> {{ model.sgstAmount }} </td>
+                <td>
+                  <select [(ngModel)]="model.igstPer" class="form-control" [disabled]="isIgstDisabled" (blur)="onBlurInput(model)" (change)="onChangeTax(model)">
+                    <option *ngFor="let g of gstSlabsAsHalf" [value]="g.value">{{ g.text }}</option>
+                  </select>
+                </td>
+                <td class="g-td-padding text-right"> {{ model.igstAmount }} </td>
+                <td class="g-td-padding"> {{ model.cessPer }} </td>
+                <td class="g-td-padding text-right"> {{ model.cessAmount }} </td>
+              </tr>
+              <tr>
+                <td colspan="6" class="g-td-padding text-right">Total</td>
+                <td class="g-td-padding text-right">{{ totalModel.discount | number: '.2-2' }}</td>
+                <td class="g-td-padding text-right">{{ totalModel.taxableValue | number: '.2-2' }}</td>
+                <td colspan="2" class="g-td-padding text-right">{{ totalModel.cgst | number: '.2-2' }}</td>
+                <td colspan="2" class="g-td-padding text-right">{{ totalModel.sgst | number: '.2-2' }}</td>
+                <td colspan="2" class="g-td-padding text-right">{{ totalModel.igst | number: '.2-2' }}</td>
+                <td colspan="2" class="g-td-padding text-right">{{ totalModel.cess | number: '.2-2' }}</td>
+              </tr>
+            </tbody>
+
+          </table>
+
+        </div>
+        <div class="g-table-editable g-scrollbar g-table-2">
+          <table class="g-table">
+            <thead>
+              <tr>
+                <th class="text-right">Total</th>
+              </tr>
+              <tr>
+                <th class="text-right">
+                  (Rs.)
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let model of invoice.invoiceDetails">
+                <td class="text-right">
+                  <input type="text" class="form-control" [(ngModel)]="model.total" disabled/>
+                </td>
+              </tr>
+              <tr>
+                <td class="g-td-padding text-right">{{ totalModel.grandTotal | number: '.2-2' }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-margin-25">
+      <div class="col-lg-6">
+        <div class="row">
+          <div class="col-lg-5">
+            <md-select placeholder="Advanced Settings" class="g-full-width" [(ngModel)]="advancedSetting">
+              <md-option *ngFor="let a of advancedSettings" [value]="a.value">
+                {{a.text}}
+              </md-option>
+            </md-select>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="row justify-content-end">
+          <div class="col-lg-5 text-right">
+            <div class="form-group">
+              <label for="dueDate" class="form-control-label col-form-label-sm">Grand Total: </label>
+              <b> {{ totalModel.grandTotal | number: '.2-2' }} </b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

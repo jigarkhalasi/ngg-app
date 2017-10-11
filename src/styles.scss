@@ -1,0 +1,303 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+// deeppurple-amber.css
+// indigo-pink.css
+// pink-bluegrey.css
+// purple-green.css
+/* You can add global styles to this file, and also import other style files */
+$GST_Brand_Color: #145ee8;
+
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0px;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+}
+
+.g-login-page {
+    height: 100%;
+    background-color: #0261b0;
+    .g-sidebar-container {
+        background-color: transparent;
+    }
+}
+
+.g-content-page {
+    // margin-bottom: 50px;
+    height: 100%;
+}
+
+.g-sidebar-container {
+    height: 100%;
+    background-color: white;
+}
+
+.g-sidenav-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.g-sidenav {
+    .gst-selection {
+        padding: 20px;
+        box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    }
+    width: 300px;
+    background-color: #fafafa;
+    box-shadow: 3px 0 6px rgba(0,0,0,.24);
+    nav {
+        .nav_link {
+            display: block;
+            padding: 16px 40px;
+            margin: 0;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 24px;
+            letter-spacing: 0;
+            border-right: 4px solid white;
+            &:hover {
+                background-color: #e0e0e0;
+                cursor: pointer;
+                border-right: 4px solid black;
+            }
+            &.active {
+                background-color: #e0e0e0;
+                border-right: 4px solid black;
+            }
+        }
+
+    }
+}
+
+/* Breadcrumb */
+.g-breadcrumb {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    ul {
+        padding-left: 0px;
+        margin: 0px;
+    }
+    li {
+        display: inline-block;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-right: 5px;
+    }
+    a {
+        cursor: pointer;
+        color: #145ee8;
+    }
+}
+
+/* Page Header */
+.g-page-header {
+    margin-top: 0;
+    margin-bottom: 0;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    h1 {
+        font-weight: 100;
+        color: #444;
+        margin-top: 0;
+        font-size: 20px;
+        display: inline-block;
+    }
+}
+
+/* Utility */
+.g-margin-10 {
+    margin-top: 10px;
+}
+.g-margin-25 {
+    margin-top: 25px;
+}
+.clearfix {
+    clear: both;
+}
+.g-pull-right {
+    float: right;
+}
+
+.g-full-width {
+    width: 100%;
+}
+
+.g-spacer {
+    flex: 1 1 auto;
+}
+
+/* Utility end */
+
+.g-summery-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    //box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.05), 0 1px 0px 0 rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.05), 0 1px 10px 0 rgba(0, 0, 0, 0.05);
+    .g-summery-box {
+        flex: 1 auto;
+        padding: 10px 0px;
+    }
+    
+    .g-no {
+        display: inline-block;
+        font-size: 28px;
+        padding-right: 10px;
+        color: #145ee8;
+    }
+    
+    .g-desc {
+        display: inline-block;
+        color: #9e9e9e;
+    }
+}
+
+.g-invoice-choice-dialog {
+    .choice-list {
+
+    }
+    .choice-item {
+        cursor: pointer;
+        display: inline-block;
+        padding: 0px 20px;
+    }
+    .sales {
+        //background-color: #fbc7c7;
+        color: #ec1212;
+        border-bottom: 4px solid transparent;
+        &:hover {
+            border-bottom: 4px solid #ec1212;
+        }
+    }
+    .purchase {
+        //background-color: #bfd5ff;
+        color: #145ee8;
+        border-bottom: 4px solid transparent;
+        &:hover {
+            border-bottom: 4px solid;
+        }
+    }
+    .gst {
+        //background-color: #ffdfff;
+        color: #f34df5;
+        border-bottom: 4px solid transparent;
+        &:hover {
+            border-bottom: 4px solid;
+        }
+    }
+    .title {
+        font-size: 30px;
+        font-weight: 400;
+    }
+}
+/* Table */
+.g-table-container {
+    overflow-x: auto;
+    .g-table {
+        width: 100%;
+        tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+        th {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+            color: #837e7e;
+            white-space: nowrap;
+        }
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #e2e2e2;
+            /*border-bottom: 1px solid #f2f2f2;*/
+            font-size: 12px;
+            white-space: nowrap;
+        }
+    }
+}
+
+.g-table-editable {
+    overflow-x: auto;
+    .g-table {
+        width: 100%;
+        input.form-control, select.form-control {
+            border: 1px solid rgba(0, 0, 0, 0);
+            min-width: 80px;
+        }
+        input.form-control:focus, select.form-control:focus {
+            outline: 1px solid #0099e5!important;
+        }
+        .form-control:disabled {
+            background-color: #f3f4f6;
+        }
+        tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+        th {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+            color: #837e7e;
+            white-space: nowrap;
+            border: 1px solid #e1e1e1;
+            background-color: #f3f4f6;
+        }
+        td {
+            //padding: 10px;
+            //border-bottom: 1px solid #e2e2e2;
+            border: 1px solid #e1e1e1;
+            font-size: 12px;
+            white-space: nowrap;
+            background-color: #f3f4f6;
+            padding: 0px;
+        }
+        .g-td-padding {
+            padding: .65rem .75rem;
+        }
+    }
+}
+
+.g-table-1 {
+    margin-right: 150px;
+    float: left;
+    width: calc(100% - 150px);
+}
+
+.g-table-2 {
+    position: absolute;
+    right: 0px;
+    float: right;
+    margin-right: 15px;
+    width: 150px;
+}
+
+
+
+/* Scrollbar */
+.g-scrollbar::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    //border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+.g-scrollbar::-webkit-scrollbar {
+    width: 12px;
+    height: 10px;
+    background-color: #F5F5F5;
+}
+
+.g-scrollbar::-webkit-scrollbar-thumb {
+    //border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    /*background-color: rgba(51, 78, 93, 0.3);*/
+    background-color: #e2e2e2;
+}
+
+.g-address {
+    font-size: 90%;
+    color: rgba(41, 43, 44, 0.61);
+    overflow-wrap: break-word;
+}

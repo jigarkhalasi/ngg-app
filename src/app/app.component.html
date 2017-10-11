@@ -1,0 +1,40 @@
+<div class="" [ngClass]="!authService.isAuthenticated ? 'g-login-page' : 'g-content-page'">
+    <div [hidden]='!authService.isAuthenticated' class="mat-elevation-z6">
+        <md-toolbar color="primary" class="">
+            <i class="material-icons" (click)="sidenav.toggle()" style="cursor: pointer;">menu</i>
+            <span style="padding-left: 10px">GST Portal</span>
+            <span class="g-spacer"></span>
+            <button md-button [mdMenuTriggerFor]="menu">Ghanshyam Patel <i class="material-icons">arrow_drop_down</i></button>
+            <md-menu #menu="mdMenu">
+                <button md-menu-item (click)="openChangePasswordDialog()">Change Password</button>
+                <button md-menu-item (click)="logout()">Logout</button>
+            </md-menu>
+        </md-toolbar>
+    </div>
+
+    <md-sidenav-container class="g-sidebar-container">
+        <md-sidenav #sidenav mode="side" [opened]="authService.isAuthenticated" class="g-sidenav mdl-layout">
+            <!-- sidenav content -->
+            <md-select placeholder="GSTIN" class="g-full-width g-margin-10 gst-selection" [(ngModel)]="gstinId" (change)="onChangeGstin()" floatPlaceholder="never">                    
+                <md-option *ngFor="let g of gstinArray" [value]="g.gstinId">
+                    {{ g.displayName }} | {{ g.gstin }}                    
+                </md-option>
+            </md-select>
+
+            <!--<span class="mdl-layout-title">Title</span>-->
+            <nav>
+                <a class="nav_link" routerLink="/businesses" routerLinkActive="active">Businesses</a>
+                <a class="nav_link" routerLink="/sales" routerLinkActive="active" *ngIf="gstinId">Sales Invoices</a>
+                <a class="nav_link" routerLink="/purchases" routerLinkActive="active" *ngIf="gstinId">Purchase Invoices</a>
+                <a class="nav_link" routerLink="/contacts" routerLinkActive="active" *ngIf="gstinId">Contacts</a>
+                <a class="nav_link" routerLink="/items" routerLinkActive="active" *ngIf="gstinId">Items</a>
+            </nav>
+        </md-sidenav>
+
+        <!-- primary content -->
+        <div class="g-sidenav-content">
+            <router-outlet></router-outlet>
+        </div>
+    </md-sidenav-container>
+
+</div>

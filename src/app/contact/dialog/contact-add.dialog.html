@@ -1,0 +1,98 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()" novalidate>
+    <h2 md-dialog-title>Add new contact</h2>
+    <hr/>
+
+    <md-dialog-content>
+        <md-input-container class="g-full-width">
+            <input mdInput placeholder="Name" formControlName="name">
+            <md-error *ngIf="formGroup.get('name').hasError('required')">
+                Name is <strong>required</strong>
+            </md-error>
+        </md-input-container>
+        <md-input-container class="g-full-width">
+            <input mdInput placeholder="GSTIN" formControlName="gstin">
+            <md-error *ngIf="formGroup.get('gstin').hasError('required')">
+                GSTIN is <strong>required</strong>
+            </md-error>
+            <md-error *ngIf="formGroup.get('gstin').hasError('pattern')">
+                GSTIN is <strong>invalid</strong>
+            </md-error>
+        </md-input-container>
+        <md-input-container class="g-full-width">
+            <input mdInput placeholder="PAN" formControlName="pan">
+            <md-error *ngIf="formGroup.get('pan').hasError('pattern')">
+                PAN is <strong>invalid</strong>
+            </md-error>
+        </md-input-container>
+
+        <div class="row">
+            <div class="col-md-6">
+                <md-input-container class="g-full-width">
+                    <input mdInput placeholder="Country" formControlName="country">
+                </md-input-container>
+            </div>
+            <div class="col-md-6" style="margin-top: 22px">
+                <md-select placeholder="State" class="g-full-width" formControlName="state">
+                    <md-option *ngFor="let state of states" [value]="state.stateCode">
+                        {{state.stateName}}
+                    </md-option>
+                </md-select>
+                <md-error *ngIf="formGroup.get('state').hasError('required')">
+                    State is <strong>required</strong>
+                </md-error>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <md-input-container class="g-full-width">
+                    <input mdInput placeholder="Contact Person" formControlName="contactPerson">
+                </md-input-container>
+            </div>
+            <div class="col-md-6">
+                <md-input-container class="g-full-width">
+                    <input mdInput placeholder="Mobile" formControlName="mobile">
+                </md-input-container>
+            </div>
+        </div>
+        <md-input-container class="g-full-width">
+            <textarea mdInput placeholder="Address" formControlName="address"></textarea>
+        </md-input-container>
+        <div class="row">
+            <div class="col-md-6">
+                <md-input-container class="g-full-width">
+                    <input mdInput type="number" placeholder="Pincode" formControlName="pinCode">
+                </md-input-container>
+            </div>
+            <div class="col-md-6">
+                <md-input-container class="g-full-width">
+                    <input mdInput placeholder="City" formControlName="city">
+                </md-input-container>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <md-input-container class="g-full-width">
+                    <input mdInput placeholder="Email id" formControlName="email">
+                    <md-error *ngIf="formGroup.get('email').hasError('pattern')">
+                        Please enter a valid email address
+                    </md-error>
+                </md-input-container>
+            </div>
+            <div class="col-md-6">
+                <md-input-container class="g-full-width">
+                    <input mdInput placeholder="Landline No." formControlName="landline">
+                </md-input-container>
+            </div>
+        </div>
+
+    </md-dialog-content>
+
+    <hr/>
+
+    <md-dialog-actions class="g-margin-10">
+        <div class="g-spacer"></div>
+        <button md-raised-button type="button" (click)="onClose()">Cancel</button> &nbsp;
+        <button md-raised-button type="submit">Save</button>
+    </md-dialog-actions>
+</form>

@@ -1,0 +1,20 @@
+<form [formGroup]="GstInForm" (ngSubmit)="onSubmitGstin()" novalidate>
+    <h2 md-dialog-title><span>{{ frmTitle }}</span> Gstin</h2>
+    <hr/>
+
+    <md-dialog-content>
+        <md-input-container>
+            <input mdInput placeholder="GSTIN" formControlName="gstin" (blur)="onBlurGetStateName()">            
+        </md-input-container>
+        <md-input-container>
+            <input mdInput placeholder="State Name" formControlName="displayName">
+        </md-input-container>
+    </md-dialog-content>
+
+    <md-dialog-actions class="g-margin-10">
+        <div class="g-spacer"></div>
+        <button md-raised-button type="button" (click)="onClose(true)">Cancel</button>
+        <!-- Can optionally provide a result for the closing dialog. -->
+        <button md-raised-button type="submit">Save</button>
+    </md-dialog-actions>
+</form>

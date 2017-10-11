@@ -1,0 +1,36 @@
+<form [formGroup]="formGroup" (ngSubmit)="saveAddress()">
+  <h2 md-dialog-title>Edit Address</h2>
+  <hr>
+  <div md-dialog-content>
+    <md-input-container class="g-full-width">
+      <input mdInput placeholder="Address" formControlName="address">
+    </md-input-container>
+
+    <div class="row">
+      <div class="col-md-4">
+        <md-input-container class="g-full-width">
+          <input mdInput placeholder="City" formControlName="city">
+        </md-input-container>
+      </div>
+      <div class="col-md-4" style="margin-top: 22px;">
+        <md-select placeholder="State" class="g-full-width" formControlName="state">
+          <md-option [value]=''>None</md-option>
+          <md-option *ngFor="let state of states" [value]="state.stateName">
+            {{state.stateName}}
+          </md-option>
+        </md-select>
+      </div>
+      <div class="col-md-4">
+        <md-input-container class="g-full-width">
+          <input mdInput #postalCode maxlength="6" placeholder="Pin Code" formControlName="pinCode">
+          <md-hint align="end">{{postalCode.value.length}} / 6</md-hint>
+        </md-input-container>
+      </div>
+    </div>
+
+  </div>
+  <div md-dialog-actions>
+    <button md-raised-button type="button" (click)="closeDialog()">Cancel</button> &nbsp;
+    <button md-raised-button type="submit">Save</button>
+  </div>
+</form>

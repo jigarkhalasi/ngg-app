@@ -1,0 +1,9 @@
+    <h2 md-dialog-title>Remove</h2>
+    <md-dialog-content>
+        <p>Are you sure you want to delete this element?</p>
+    </md-dialog-content>
+    <md-dialog-actions class="g-margin-10">
+        <div class="g-spacer"></div>
+        <button md-raised-button type="button" (click)="onClose(false)">No</button>
+        <button md-raised-button type="button" (click)="onClose(true)">Yes</button>        
+    </md-dialog-actions>
